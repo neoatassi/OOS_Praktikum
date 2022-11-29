@@ -1,0 +1,233 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": ""
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false // root node is included
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "bank.CalculateBill"
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_3016252 { 
+   	label=bank
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   CalculateBill3016252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)CalculateBill</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ calculate(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+
+IncomingTransfer3016252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)IncomingTransfer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ calculate(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+OutgoingTransfer3016252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OutgoingTransfer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ calculate(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Payment3016252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Payment</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   incomingInterest: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   outgoingInterest: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ calculate(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PrivateBank3016252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PrivateBank</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   accountsToTransactions: Map&lt;String, List&lt;Transaction&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   incomingInterest: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   outgoingInterest: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addTransaction(account: String, transaction: Transaction)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ containsTransaction(account: String, transaction: Transaction): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createAccount(account: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createAccount(account: String, transactions: List&lt;Transaction&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAccountBalance(account: String): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTransactions(account: String): List&lt;Transaction&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTransactionsByType(account: String, positive: boolean): List&lt;Transaction&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTransactionsSorted(account: String, asc: boolean): List&lt;Transaction&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeTransaction(account: String, transaction: Transaction)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+PrivateBankAlt3016252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PrivateBankAlt</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   accountsToTransactions: Map&lt;String, List&lt;Transaction&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   incomingInterest: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   outgoingInterest: double [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addTransaction(account: String, transaction: Transaction)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ containsTransaction(account: String, transaction: Transaction): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createAccount(account: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createAccount(account: String, transactions: List&lt;Transaction&gt;)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getAccountBalance(account: String): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTransactions(account: String): List&lt;Transaction&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTransactionsByType(account: String, positive: boolean): List&lt;Transaction&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTransactionsSorted(account: String, asc: boolean): List&lt;Transaction&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeTransaction(account: String, transaction: Transaction)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Transaction3016252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Transaction</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   amount: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   date: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >#   description: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Transfer3016252[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Transfer</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   recipient: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sender: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ calculate(): double</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+CalculateBill3016252 -> Transaction3016252[arrowhead=none, arrowtail=empty, dir=both];
+PrivateBank3016252 -> PrivateBankAlt3016252[arrowhead=none, arrowtail=empty, dir=both];
+PrivateBank3016252 -> Transaction3016252[label="accountsToTransactions
+[0..*]"];
+PrivateBankAlt3016252 -> Transaction3016252[label="accountsToTransactions
+[0..*]"];
+Transaction3016252 -> Payment3016252[arrowhead=none, arrowtail=empty, dir=both];
+Transaction3016252 -> Transfer3016252[arrowhead=none, arrowtail=empty, dir=both];
+Transfer3016252 -> IncomingTransfer3016252[arrowhead=none, arrowtail=empty, dir=both];
+Transfer3016252 -> OutgoingTransfer3016252[arrowhead=none, arrowtail=empty, dir=both];
+    
+}
+@enduml
